@@ -113,12 +113,14 @@ loadMoreBtn.addEventListener('click', async () => {
 
 const { hits, totalHits } = await getImagesByQuery(query, page);
 
-if (hits.length === 0) {
-  iziToast.warning({ title: 'Error', message: 'Something went wrong' });
-  return;
+function handleHits(hits) {
+  if (hits.length === 0) {
+    iziToast.warning({ title: 'Error', message: 'Something went wrong' });
+    return;
+  }
+  renderGallery(hits);
 }
-renderGallery(hits);
-
+handleHits(hits);
 
 if (page === 1 && hits.length <= per_page) {
   iziToast.info({
