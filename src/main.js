@@ -110,3 +110,19 @@ loadMoreBtn.addEventListener('click', async () => {
     }, 500);
   }
 });
+
+const { hits, totalHits } = await getImagesByQuery(query, page);
+
+if (hits.length === 0) {
+  iziToast.warning({ title: 'Error', message: 'Something went wrong' });
+  return;
+}
+renderGallery(hits);
+
+
+if (page === 1 && hits.length <= per_page) {
+  iziToast.info({
+    title: 'Warning', message:
+      "We're sorry, but you've reached the end of search results." });
+  hideLoadMoreButton();
+}
